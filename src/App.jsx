@@ -7,6 +7,7 @@ import DashboardLayout from './components/DashboardLayout';
 import Login from './pages/Login';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import Details from './pages/Details';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
                   <Route path="/" element={<Navigate to="/sponsors" replace />} />
                   <Route path="/sponsors" element={<Sponsors />} />
                   <Route path="/exhibitors" element={<Exhibitors />} />
+                  <Route path="/details" element={<Details />} />
                 </Routes>
               </DashboardLayout>
             }

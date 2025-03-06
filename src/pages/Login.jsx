@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import odsLogo from '../assets/ods-logo.png'
 import banner from '../assets/banner.png'
 import Footer from '../components/Footer'
@@ -7,6 +7,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router";
 import { useAuth } from '../context/AuthContext';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const initialValues = {
@@ -18,21 +20,35 @@ const Login = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        login();
-        navigate("/sponsors"); // Redirect after login
-      };
+    const [loading, setLoading] = useState(false);
+
+    // const handleLogin = () => {
+    //     login();
+    //     navigate("/sponsors"); // Redirect after login
+    //   };
 
     const schema = yup.object({
         email: yup
           .string()
           .email("Please enter a valid email")
           .required("Email is required"),
-        password: yup.string().required("Password is required").min(8),
+        password: yup.string().required("Password is required").min(3),
       });
 
       const onSubmit = async (values, actions) => {
-        setLoader(true);
+        try {       
+          setLoading(true);
+          await login(values)
+          toast.success('Login successful')
+          setTimeout(()=> {
+            navigate("/sponsors")
+          }, 2000)
+        } catch (error) {
+          toast.error('Login failed')
+          // console.log(error);  
+        } finally {
+          setLoading(false)
+        }
         // loginAction(values)
         //   .then((res) => {
         //     console.log(res);
@@ -71,6 +87,7 @@ const Login = () => {
       });
   return (
     <div>
+        <ToastContainer closeButton={false} />
         <div className="flex justify-center items-center h-screen">
             <div className='w-[717px] max-w-[100%] rounded-[24px] border-[1px] border-[#EAEAEA] bg-[#fff] rounded-[24px] p-[80px]'>
                 <img src={odsLogo} alt='' className='block mx-auto'/>
@@ -92,7 +109,7 @@ const Login = () => {
                     <div className=''>
                         <div className='mb-[12px] flex justify-between'>
                             <label className={`font-[400] text-[14px] ${errors.password&&touched.password?'text-[#fc8181]':'text-[#1D1E2C]'} leading-[19.26px] tracking-[0%] block`} htmlFor='password'>{errors.password&&touched.password?errors.password:'Password'}</label>
-                            <p className='font-[400] text-[14px] text-[#178A2D] leading-[19.26px] tracking-[0%]'>Forgot Password?</p>
+                            {/* <p className='font-[400] text-[14px] text-[#178A2D] leading-[19.26px] tracking-[0%]'>Forgot Password?</p> */}
                         </div>
                         <input 
                             type='password' 
@@ -104,7 +121,7 @@ const Login = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}/>
                     </div>
-                    {/* <button type='submit' className='w-[228px] h-[40px] bg-[#178A2D] text-[14px] leading-[20px] tracking-[0.2px] text-[#fff] rounded-[4px] px-[12px] py-[10px] block mx-auto mt-[40px] cursor-pointer'>{loading?<img src={loader} alt='loading gif' className='block mx-auto'/>:'Log In'}</button> */}
+                    <button type='submit' className='w-[228px] h-[40px] bg-[#178A2D] text-[14px] leading-[20px] tracking-[0.2px] text-[#fff] rounded-[4px] px-[12px] py-[10px] block mx-auto mt-[40px] cursor-pointer'>{loading?<img src={loader} alt='loading gif' className='block mx-auto w-[20px] h-[20px]'/>:'Log In'}</button>
                 </form>
             </div>
         </div>

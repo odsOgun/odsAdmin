@@ -1,27 +1,43 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { loginAction } from "../api/auth";
+import Cookies from 'js-cookie'
 
-// Create Auth Context
 const AuthContext = createContext();
 
-// Custom Hook to use AuthContext
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Simulating authentication state (you can use localStorage or cookies)
-    const token = localStorage.getItem("authToken");
-    setIsAuthenticated(!!token); 
+    try {
+      const token = Cookies.get("token");  
+      if (token) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    } catch (err) {
+      console.error("Failed to get authentication token", err);
+    }
   }, []);
 
-  const login = () => {
-    localStorage.setItem("authToken", "dummy_token");
-    setIsAuthenticated(true);
+  const login = async (data) => {
+    return loginAction(data)
+    .then(response => {
+      console.log(response);
+      const token = response.data.token;
+      Cookies.set("token", token, { secure: true, sameSite: "Strict" });
+      setIsAuthenticated(true);
+    })
+    .catch(error => {
+      console.log(error);
+      console.log(error.response.data.message);
+    })
   };
 
   const logout = () => {
-    localStorage.removeItem("authToken");
+    Cookies.remove("token");
     setIsAuthenticated(false);
   };
 
