@@ -1,14 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebookSquare } from "react-icons/fa";
+import { useSearchParams, useNavigate } from "react-router";
+import { fetchExhibitorDetails } from '../api/data';
 
-const Details = () => {
+const ExhibitorDetails = () => {
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('user');
+
+    const [userDetails, setUserDetails] = useState({})
+    useEffect(()=> {
+        fetchExhibitorDetails(id)
+        .then(res => {
+            console.log(res);
+            setUserDetails(res.data.data.exhibitor)
+        })
+        .catch(err => {
+            console.log(err);   
+        })
+    }, [])
+
+  console.log("ID from URL:", id);
   return (
     <div className=''>
         <div className='mb-[32px]'>
-            <button className='flex items-center gap-[4px] font-[500] text-[12px] text-[#121927] leading-[150%] tracking-[3%]'>
+            <button className='flex items-center gap-[4px] font-[500] text-[12px] text-[#121927] leading-[150%] tracking-[3%]' onClick={()=>navigate(-1)}>
                 <FaArrowLeftLong className='text-[16px]'/>
                 Back
             </button>
@@ -16,19 +35,19 @@ const Details = () => {
        <div className='border-[1px] border-[#EAEAEA] rounded-[8px] p-[24px] bg-[#fff] min-h-[70vh]'>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Name</h2>
-                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>John Doe</p>
+                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>{userDetails?.fullName}</p>
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Email Address</h2>
-                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>jaytinentalworld@gmail.com.ng</p>
+                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>{userDetails?.email}</p>
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Organization</h2>
-                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>John Doe</p>
+                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>{userDetails?.organisation}</p>
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Phone Number</h2>
-                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>090353535353</p>
+                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>{userDetails?.phoneNumber}</p>
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Date registered</h2>
@@ -37,13 +56,14 @@ const Details = () => {
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Social Links</h2>
                 <div className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%] flex gap-[12px]'>
-                    <FaInstagram />
-                    <FaXTwitter />
-                    <FaFacebookSquare /></div>
+                    <a href={userDetails?.instagramLink} target='_blank' alt='social logos'><FaInstagram /></a>
+                    <a href={userDetails?.twitterLink} target='_blank' alt='social logos'><FaXTwitter /></a>
+                    <a href={userDetails?.facebookLink} target='_blank' alt='social logos'><FaFacebookSquare /></a>
+                </div>
             </div>
         </div>     
     </div>
   )
 }
 
-export default Details
+export default ExhibitorDetails

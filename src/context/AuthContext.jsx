@@ -25,14 +25,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (data) => {
     return loginAction(data)
     .then(response => {
-      console.log(response);
+      // console.log(response);
       const token = response.data.token;
       Cookies.set("token", token, { secure: true, sameSite: "Strict" });
       setIsAuthenticated(true);
     })
     .catch(error => {
-      console.log(error);
-      console.log(error.response.data.message);
+      // console.log(error);
+      // console.log(error.response.data.message);
     })
   };
 

@@ -49,26 +49,6 @@ const Login = () => {
         } finally {
           setLoading(false)
         }
-        // loginAction(values)
-        //   .then((res) => {
-        //     console.log(res);
-        //     if (res) {
-        //       setLoader(false);
-        //       setUser(res.data.data.data.user);
-        //       toast.success(res.data.data.data.message);
-        //       Cookies.set(
-        //         "user_details",
-        //         JSON.stringify({
-        //           name: res.data.data.data.user.firstName,
-        //         })
-        //       );
-        //     }
-        //   })
-        //   .catch((err) => {
-        //     setLoader(false);
-        //     console.log(err);
-        //     toast.error(err.response?.data?.message);
-        //   });
         // actions.resetForm()
       };
 
