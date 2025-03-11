@@ -92,7 +92,7 @@ const Sponsors = () => {
                         <td className='flex justify-center text-[24px] items-center gap-[12px] py-[13px]'>
                             <a href={user?.instagramLink} target='_blank' alt='instagram icon'><FaInstagram /></a>
                             <a href={user?.twitterLink} target='_blank' alt='twitter icon'><FaXTwitter /></a>
-                             <a href={user?.facebookLink} target='_blank' alt='facebook icon'><FaFacebookSquare /></a>
+                             {/* <a href={user?.facebookLink} target='_blank' alt='facebook icon'><FaFacebookSquare /></a> */}
                         </td>
                         <td>{formatDate(user.createdAt)}</td>
                     </tr>))}

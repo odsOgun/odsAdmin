@@ -64,7 +64,7 @@ const ExhibitorDetails = () => {
                 <div className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%] flex gap-[12px]'>
                     <a href={userDetails?.instagramLink} target='_blank' alt='social logos'><FaInstagram /></a>
                     <a href={userDetails?.twitterLink} target='_blank' alt='social logos'><FaXTwitter /></a>
-                    <a href={userDetails?.facebookLink} target='_blank' alt='social logos'><FaFacebookSquare /></a>
+                    {/* <a href={userDetails?.facebookLink} target='_blank' alt='social logos'><FaFacebookSquare /></a> */}
                 </div>
             </div>
         </div>     
