@@ -22,6 +22,13 @@ const SponsorDetails = () => {
             // console.log(err);   
         })
     }, [])
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
 
   return (
     <div className=''>
@@ -50,7 +57,7 @@ const SponsorDetails = () => {
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Date registered</h2>
-                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>John Doe</p>
+                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>{formatDate(userDetails?.createdAt)}</p>
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Social Links</h2>

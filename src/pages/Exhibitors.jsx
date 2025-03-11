@@ -41,6 +41,16 @@ const Exhibitors = () => {
         setCount(filtered.length)
         setFilteredUsers(filtered);
     };
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
+    
+
   return (
     <div className='border-[1px] border-[#EAEAEA] rounded-[8px] p-[24px] bg-[#fff] min-h-[70vh]'>
         <div className='flex justify-between mb-[24px]'>
@@ -76,9 +86,9 @@ const Exhibitors = () => {
                         <td className='flex justify-center text-[24px] items-center gap-[12px] py-[13px]'>
                             <a href={user?.instagramLink} target='_blank' alt='instagram icon'><FaInstagram /></a>
                             <a href={user?.twitterLink} target='_blank' alt='twitter icon'><FaXTwitter /></a>
-                            <a href={user?.facebookLink} target='_blank' alt='facebook icon'><FaFacebookSquare /></a>
+                            {/* <a href={user?.facebookLink} target='_blank' alt='facebook icon'><FaFacebookSquare /></a> */}
                         </td>
-                        <td>22/02/2025</td>
+                        <td>{formatDate(user.createdAt)}</td>
                     </tr>))}
                 </tbody>
             </table>

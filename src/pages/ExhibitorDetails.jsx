@@ -15,7 +15,7 @@ const ExhibitorDetails = () => {
     useEffect(()=> {
         fetchExhibitorDetails(id)
         .then(res => {
-            console.log(res);
+            // console.log(res);
             setUserDetails(res.data.data.exhibitor)
         })
         .catch(err => {
@@ -23,7 +23,13 @@ const ExhibitorDetails = () => {
         })
     }, [])
 
-  console.log("ID from URL:", id);
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
   return (
     <div className=''>
         <div className='mb-[32px]'>
@@ -51,7 +57,7 @@ const ExhibitorDetails = () => {
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Date registered</h2>
-                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>John Doe</p>
+                <p className='font-[400] text-[16px] text-[#787878] leading-[150%] tracking-[3%]'>{formatDate(userDetails?.createdAt)}</p>
             </div>
             <div className='mb-[24px]'>
                 <h2 className='font-[500] text-4 text-[#121927] leading-[150%] tracking-[3%] mb-[8px]'>Social Links</h2>
