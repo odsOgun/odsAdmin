@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import ExhibitorDetails from './pages/ExhibitorDetails';
 import SponsorDetails from './pages/SponsorDetails';
+import Attendees from './pages/Attendees';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                   <Route path="/exhibitors" element={<Exhibitors />} />
                   <Route path="/exhibitor-details" element={<ExhibitorDetails />} />
                   <Route path="/sponsor-details" element={<SponsorDetails />} />
+                  <Route path="/attendees" element={<Attendees />} />
                 </Routes>
               </DashboardLayout>
             }
