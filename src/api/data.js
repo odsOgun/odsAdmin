@@ -22,3 +22,8 @@ export const searchExhibitors = (data) => {
         params: { keyword: data },
     })
 }
+export const fetchAttendees = (token) =>{
+    return authKit.get('api/v1/admin/registrations', {
+        headers: {
+        Authorization: `Bearer ${token}`}})
+}
