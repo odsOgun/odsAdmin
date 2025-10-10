@@ -7,6 +7,7 @@ import exhibitorActive from '../assets/exhibitor-active.png'
 import signout from '../assets/signout.png'
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { FaUsers } from "react-icons/fa6";
 
 
 const Sidebar = () => {
@@ -48,6 +49,20 @@ const Sidebar = () => {
           >
             <img src={active == 'exhibitors'?exhibitorActive:exhibitor} alt="ods logo" />
             Exhibitors
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink
+            to="/attendees"
+            onClick={() => setActive("attendees")} 
+            className={({ isActive }) =>
+              `flex gap-[12px] items-center p-2 mt-4 rounded font-medium text-[16px] leading-[24px] tracking-[3%] ${isActive ? "bg-[#03BE5E0D] text-[#03BE5E]" : "hover:bg-[#FFFFFF] text-[#292D32]"}`
+            }
+          >
+            {/* <img src={active == 'attendees'?attendeesActive:attendees} alt="ods logo" /> */}
+            <FaUsers className="text-[20px]"/>
+            Attendees
           </NavLink>
         </li>
       </ul>
